@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { DiagnosticForm } from "@/components/diagnostic-form";
+import { CookieConsent, CookiePreferencesButton } from "@/components/cookie-consent";
+import { MotionController } from "@/components/motion-controller";
 import { siteConfig, whatsappUrl } from "@/lib/site-config";
 
 const values = [
@@ -34,6 +36,14 @@ const faqs = [
   ["Em quanto tempo vou ver resultados?", "Não existe prazo garantido. Resultado depende do ponto de partida, frequência, execução, recuperação e consistência. A proposta é tornar o processo mensurável e ajustável."],
 ];
 
+const instagramReels = [
+  ["/media/instagram-training-optimized.mp4", "/media/instagram-1.jpg", "Quadríceps no leg press"],
+  ["/media/instagram-2.mp4", "/media/instagram-2.jpg", "Treino de costas"],
+  ["/media/instagram-3.mp4", "/media/instagram-3.jpg", "Técnica no búlgaro"],
+  ["/media/instagram-4.mp4", "/media/instagram-4.jpg", "Ajustes no hack machine"],
+  ["/media/instagram-5.mp4", "/media/instagram-5.jpg", "Execução e amplitude"],
+];
+
 function CTA({ className = "" }: { className?: string }) {
   return <a className={`button button-light ${className}`} href="#diagnostico">QUERO COMEÇAR</a>;
 }
@@ -46,6 +56,7 @@ export default function Home() {
   };
   return (
     <main>
+      <MotionController />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <header className="topbar">
         <a className="brand" href="#inicio" aria-label="Vitor Lior — início">VITOR <span>LIOR</span></a>
@@ -79,7 +90,7 @@ export default function Home() {
       <section className="audience-section section-shell">
         <p className="section-index">03 / PARA QUEM É</p>
         <div className="audience-head"><h2>OBJETIVOS DIFERENTES.<br />A MESMA PRECISÃO.</h2><p>O método se adapta à pessoa — não o contrário.</p></div>
-        <div className="audience-grid">{audiences.map(([title, copy], index) => <article className={index === 0 ? "featured" : ""} key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p>{index === 0 && <b>ÁREA DE ESPECIALIZAÇÃO: HIPERTROFIA FEMININA</b>}</article>)}</div>
+        <div className="audience-grid">{audiences.map(([title, copy], index) => <article data-reveal style={{ "--reveal-delay": `${index * 65}ms` } as React.CSSProperties} className={index === 0 ? "featured" : ""} key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p>{index === 0 && <b>ÁREA DE ESPECIALIZAÇÃO: HIPERTROFIA FEMININA</b>}</article>)}</div>
       </section>
 
       <section className="process-section section-shell">
@@ -88,7 +99,7 @@ export default function Home() {
       </section>
 
       <section className="authority-section" id="sobre">
-        <div className="authority-photo"><Image src="/media/instagram-3.jpg" alt="Vitor Lior orientando a execução de um exercício" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
+        <div className="authority-photo"><Image src="/media/vitor-coaching-hd.webp" alt="Vitor Lior orientando a execução de um exercício" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
         <div className="authority-copy"><p className="section-index">05 / AUTORIDADE</p><span className="outline-name">VITOR LIOR</span><h2>TÉCNICA PARA ENTENDER<br />O PORQUÊ DE CADA ESCOLHA.</h2><p>Formado em Educação Física, pós-graduado em Biomecânica e especialista em hipertrofia feminina, Vitor orienta o treino a partir da individualidade. O objetivo não é acumular exercícios, mas entender quais movimentos, volumes e progressões fazem sentido para você.</p><ul><li>EDUCAÇÃO FÍSICA</li><li>PÓS-GRADUAÇÃO EM BIOMECÂNICA</li><li>ESPECIALISTA EM HIPERTROFIA FEMININA</li></ul></div>
       </section>
 
@@ -103,8 +114,7 @@ export default function Home() {
       <section className="instagram-section section-shell">
         <div className="instagram-title"><p className="section-index">07 / INSTAGRAM</p><h2>TREINO.<br /><span>TÉCNICA.</span><br />ROTINA.</h2><a href={siteConfig.instagram} target="_blank" rel="noreferrer">{siteConfig.instagramHandle} · SEGUIR NO INSTAGRAM</a></div>
         <div className="instagram-grid">
-          <figure className="reel"><video controls playsInline preload="none" poster="/media/instagram-1.jpg" aria-label="Vídeo de conteúdo técnico de treino"><source src="/media/instagram-training-optimized.mp4" type="video/mp4" /></video><figcaption>CONTEÚDO TÉCNICO · REEL</figcaption></figure>
-          {[2,3,4,5].map((item) => <figure key={item}><Image src={`/media/instagram-${item}.jpg`} alt="Conteúdo de treino do Instagram de Vitor Lior" width={360} height={640} loading="lazy" /></figure>)}
+          {instagramReels.map(([src, poster, label], index) => <figure data-reveal style={{ "--reveal-delay": `${index * 55}ms` } as React.CSSProperties} className="reel" key={src}><video controls playsInline preload="none" poster={poster} aria-label={`Vídeo: ${label}`}><source src={src} type="video/mp4" /></video><figcaption>{label.toUpperCase()} · REEL</figcaption></figure>)}
         </div>
       </section>
 
@@ -120,8 +130,9 @@ export default function Home() {
 
       <section className="final-cta section-shell"><p className="section-index">10 / PRÓXIMO PASSO</p><h2>VOCÊ NÃO PRECISA DE MAIS<br />UM TREINO DA INTERNET.<br /><em>PRECISA DE UM PLANO<br />FEITO PARA VOCÊ.</em></h2><div className="hero-actions"><CTA /><a className="button button-ghost" href={whatsappUrl} target="_blank" rel="noreferrer">FALAR NO WHATSAPP</a></div></section>
 
-      <footer><a className="brand" href="#inicio">VITOR <span>LIOR</span></a><p>EDUCAÇÃO FÍSICA · BIOMECÂNICA · HIPERTROFIA FEMININA</p><div><a href={siteConfig.instagram} target="_blank" rel="noreferrer">INSTAGRAM</a><a href={whatsappUrl} target="_blank" rel="noreferrer">WHATSAPP</a></div><small>© {new Date().getFullYear()} VITOR LIOR. INFORMAÇÕES EDUCACIONAIS; RESULTADOS INDIVIDUAIS VARIAM.</small></footer>
-      <a className="floating-whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Falar com Vitor no WhatsApp">WA</a>
+      <footer><a className="brand" href="#inicio">VITOR <span>LIOR</span></a><p>EDUCAÇÃO FÍSICA · BIOMECÂNICA · HIPERTROFIA FEMININA</p><div><a href={siteConfig.instagram} target="_blank" rel="noreferrer">INSTAGRAM</a><a href={whatsappUrl} target="_blank" rel="noreferrer">WHATSAPP</a><a href="/privacidade">PRIVACIDADE</a><a href="/termos">TERMOS DE USO</a><CookiePreferencesButton /></div><small>© {new Date().getFullYear()} VITOR LIOR. TODOS OS DIREITOS RESERVADOS. INFORMAÇÕES EDUCACIONAIS; RESULTADOS INDIVIDUAIS VARIAM.</small></footer>
+      <a className="floating-whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Falar com Vitor no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.3c-1.5 0-3-.4-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A7.8 7.8 0 1 1 12 19.3Zm4.3-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.4-1.7-3.1-3-.2-.3.2-.5.5-1 .1-.2 0-.4 0-.5l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1.1 1.6-1 2.5.1 1.1.5 2.2 1.2 3.1 1.4 2.1 3.3 3.6 5.6 4.3.7.2 1.5.2 2.2.1.8-.1 1.5-.8 1.7-1.5.2-.5.2-1 .1-1.1-.2-.2-.3-.2-.5-.3Z" fill="currentColor" /></svg></a>
+      <CookieConsent />
     </main>
   );
 }
