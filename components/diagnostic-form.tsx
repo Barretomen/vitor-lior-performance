@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { whatsappUrl } from "@/lib/site-config";
+import { siteConfig, whatsappUrl } from "@/lib/site-config";
 
 type FormData = Record<string, string>;
 
@@ -66,6 +66,17 @@ export function DiagnosticForm() {
     setStatus("loading");
     setMessage("");
     try {
+      if (process.env.NEXT_PUBLIC_GITHUB_PAGES === "true") {
+        const answers = Object.entries(data)
+          .filter(([name, value]) => name !== "website" && value)
+          .map(([name, value]) => `${name}: ${value}`)
+          .join("\n");
+        const message = `Olá Vitor, vim pelo seu site e concluí o diagnóstico inicial.\n\n${answers}`;
+        window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+        setStatus("success");
+        setMessage("Diagnóstico concluído. As respostas foram preparadas para envio direto no WhatsApp.");
+        return;
+      }
       const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       const result = await response.json() as { message?: string; mode?: string };
       if (!response.ok) throw new Error(result.message || "Não foi possível enviar agora.");

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { DiagnosticForm } from "@/components/diagnostic-form";
 import { CookieConsent, CookiePreferencesButton } from "@/components/cookie-consent";
 import { MotionController } from "@/components/motion-controller";
-import { siteConfig, whatsappUrl } from "@/lib/site-config";
+import { siteConfig, whatsappUrl, withBasePath } from "@/lib/site-config";
 
 const values = [
   ["01", "AVALIAÇÃO INICIAL", "Rotina, histórico, limitações e objetivo entram na mesa antes da primeira série."],
@@ -37,11 +37,11 @@ const faqs = [
 ];
 
 const instagramReels = [
-  ["/media/instagram-training-optimized.mp4", "/media/instagram-1.jpg", "Quadríceps no leg press"],
-  ["/media/instagram-2.mp4", "/media/instagram-2.jpg", "Treino de costas"],
-  ["/media/instagram-3.mp4", "/media/instagram-3.jpg", "Técnica no búlgaro"],
-  ["/media/instagram-4.mp4", "/media/instagram-4.jpg", "Ajustes no hack machine"],
-  ["/media/instagram-5.mp4", "/media/instagram-5.jpg", "Execução e amplitude"],
+  [withBasePath("/media/instagram-training-optimized.mp4"), withBasePath("/media/instagram-1.jpg"), "Quadríceps no leg press"],
+  [withBasePath("/media/instagram-2.mp4"), withBasePath("/media/instagram-2.jpg"), "Treino de costas"],
+  [withBasePath("/media/instagram-3.mp4"), withBasePath("/media/instagram-3.jpg"), "Técnica no búlgaro"],
+  [withBasePath("/media/instagram-4.mp4"), withBasePath("/media/instagram-4.jpg"), "Ajustes no hack machine"],
+  [withBasePath("/media/instagram-5.mp4"), withBasePath("/media/instagram-5.jpg"), "Execução e amplitude"],
 ];
 
 function CTA({ className = "" }: { className?: string }) {
@@ -65,7 +65,7 @@ export default function Home() {
       </header>
 
       <section className="hero" id="inicio">
-        <Image className="hero-photo" src="/media/hero-vitor.webp" alt="Vitor Lior em um ambiente de treino" fill priority sizes="100vw" />
+        <Image className="hero-photo" src={withBasePath("/media/hero-vitor.webp")} alt="Vitor Lior em um ambiente de treino" fill priority sizes="100vw" />
         <div className="hero-shade" />
         <div className="hero-content">
           <p className="eyebrow">TREINAMENTO PERSONALIZADO · ON-LINE E PRESENCIAL</p>
@@ -99,13 +99,13 @@ export default function Home() {
       </section>
 
       <section className="authority-section" id="sobre">
-        <div className="authority-photo"><Image src="/media/vitor-coaching-hd.webp" alt="Vitor Lior orientando a execução de um exercício" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
+        <div className="authority-photo"><Image src={withBasePath("/media/vitor-coaching-hd.webp")} alt="Vitor Lior orientando a execução de um exercício" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
         <div className="authority-copy"><p className="section-index">05 / AUTORIDADE</p><span className="outline-name">VITOR LIOR</span><h2>TÉCNICA PARA ENTENDER<br />O PORQUÊ DE CADA ESCOLHA.</h2><p>Formado em Educação Física, pós-graduado em Biomecânica e especialista em hipertrofia feminina, Vitor orienta o treino a partir da individualidade. O objetivo não é acumular exercícios, mas entender quais movimentos, volumes e progressões fazem sentido para você.</p><ul><li>EDUCAÇÃO FÍSICA</li><li>PÓS-GRADUAÇÃO EM BIOMECÂNICA</li><li>ESPECIALISTA EM HIPERTROFIA FEMININA</li></ul></div>
       </section>
 
       <section className="proof-section section-shell">
         <div className="proof-head"><div><p className="section-index">06 / ACOMPANHAMENTO REAL</p><h2>PROXIMIDADE TAMBÉM<br />FAZ PARTE DO MÉTODO.</h2></div><p>Registros reais de chamadas de acompanhamento da consultoria. Sem depoimentos inventados e sem promessas irreais.</p></div>
-        <div className="proof-strip">{[1,2,3,4,5].map((item) => <figure key={item}><Image src={`/media/client-${item}.jpg`} alt="Registro de acompanhamento on-line com cliente" width={420} height={746} loading="lazy" /></figure>)}</div>
+        <div className="proof-strip">{[1,2,3,4,5].map((item) => <figure key={item}><Image src={withBasePath(`/media/client-${item}.jpg`)} alt="Registro de acompanhamento on-line com cliente" width={420} height={746} loading="lazy" /></figure>)}</div>
         <p className="proof-note">ESPAÇO PREPARADO PARA DEPOIMENTOS, EVOLUÇÕES E VÍDEOS AUTORIZADOS.</p>
       </section>
 
@@ -130,7 +130,7 @@ export default function Home() {
 
       <section className="final-cta section-shell"><p className="section-index">10 / PRÓXIMO PASSO</p><h2>VOCÊ NÃO PRECISA DE MAIS<br />UM TREINO DA INTERNET.<br /><em>PRECISA DE UM PLANO<br />FEITO PARA VOCÊ.</em></h2><div className="hero-actions"><CTA /><a className="button button-ghost" href={whatsappUrl} target="_blank" rel="noreferrer">FALAR NO WHATSAPP</a></div></section>
 
-      <footer><a className="brand" href="#inicio">VITOR <span>LIOR</span></a><p>EDUCAÇÃO FÍSICA · BIOMECÂNICA · HIPERTROFIA FEMININA</p><div><a href={siteConfig.instagram} target="_blank" rel="noreferrer">INSTAGRAM</a><a href={whatsappUrl} target="_blank" rel="noreferrer">WHATSAPP</a><a href="/privacidade">PRIVACIDADE</a><a href="/termos">TERMOS DE USO</a><CookiePreferencesButton /></div><small>© {new Date().getFullYear()} VITOR LIOR. TODOS OS DIREITOS RESERVADOS. INFORMAÇÕES EDUCACIONAIS; RESULTADOS INDIVIDUAIS VARIAM.</small></footer>
+      <footer><a className="brand" href="#inicio">VITOR <span>LIOR</span></a><p>EDUCAÇÃO FÍSICA · BIOMECÂNICA · HIPERTROFIA FEMININA</p><div><a href={siteConfig.instagram} target="_blank" rel="noreferrer">INSTAGRAM</a><a href={whatsappUrl} target="_blank" rel="noreferrer">WHATSAPP</a><a href={withBasePath("/privacidade/")}>PRIVACIDADE</a><a href={withBasePath("/termos/")}>TERMOS DE USO</a><CookiePreferencesButton /></div><small>© {new Date().getFullYear()} VITOR LIOR. TODOS OS DIREITOS RESERVADOS. INFORMAÇÕES EDUCACIONAIS; RESULTADOS INDIVIDUAIS VARIAM.</small></footer>
       <a className="floating-whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer" aria-label="Falar com Vitor no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l5.3-1.3A9.5 9.5 0 1 0 12 2Zm0 17.3c-1.5 0-3-.4-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A7.8 7.8 0 1 1 12 19.3Zm4.3-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-1.4-.7-2.4-1.7-3.1-3-.2-.3.2-.5.5-1 .1-.2 0-.4 0-.5l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1.1 1.6-1 2.5.1 1.1.5 2.2 1.2 3.1 1.4 2.1 3.3 3.6 5.6 4.3.7.2 1.5.2 2.2.1.8-.1 1.5-.8 1.7-1.5.2-.5.2-1 .1-1.1-.2-.2-.3-.2-.5-.3Z" fill="currentColor" /></svg></a>
       <CookieConsent />
     </main>

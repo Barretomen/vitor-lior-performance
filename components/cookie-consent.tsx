@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { withBasePath } from "@/lib/site-config";
 
 const STORAGE_KEY = "vitor-lior-cookie-preferences-v1";
 
@@ -33,7 +34,7 @@ export function CookieConsent() {
         <p>
           Este site usa apenas armazenamento necessário para lembrar suas preferências. Cookies opcionais
           de métricas ou marketing só poderão ser ativados com sua escolha. Saiba mais na{" "}
-          <a href="/privacidade">Política de Privacidade</a>.
+          <a href={withBasePath("/privacidade/")}>Política de Privacidade</a>.
         </p>
       </div>
       <div className="cookie-actions">

@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { withBasePath } from "@/lib/site-config";
+
+const publicUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vitor-lior-performance.imjoaobarreto.chatgpt.site";
 
 export const metadata: Metadata = {
   title: "Vitor Lior | Treinamento Personalizado",
   description: "Treinamento personalizado com biomecânica, individualidade e acompanhamento real.",
-  metadataBase: new URL("https://vitor-lior-performance.imjoaobarreto.chatgpt.site"),
+  metadataBase: new URL(publicUrl),
   openGraph: {
     title: "Vitor Lior | Treinamento Personalizado",
     description: "Treino não é tentativa. É estratégia.",
@@ -12,8 +15,8 @@ export const metadata: Metadata = {
     locale: "pt_BR",
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: withBasePath("/favicon.svg"),
+    shortcut: withBasePath("/favicon.svg"),
   },
 };
 
